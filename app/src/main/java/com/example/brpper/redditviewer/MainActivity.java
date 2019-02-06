@@ -10,6 +10,10 @@ import com.example.brpper.redditviewer.adapters.MainPagerAdaper;
 public class MainActivity extends AppCompatActivity {
 
 	// TODO: la idea es hacer una app que tenga 3 tabs y cada unos de esos tabs tenga un recyclerview y al hacer clic en un elemento se vaya a un coordinatorlayout. Los datos son los que se van a descargar de reddit. Las pestañas serán new top y trending y una cuarta de usuario tiene que tiene una mini configuración
+	/*
+	* TODO: Splash activity, guardar en greenDAO, hacer que al presionar item se abra una nueva actividad con una animación y que al presionar en cada item haya opciones
+	*
+	* */
 	// Para recyclerview estuve usando https://code.tutsplus.com/es/tutorials/getting-started-with-recyclerview-and-cardview-on-android--cms-23465
 	// pag 459 del libro para hacer tabs
 	@Override

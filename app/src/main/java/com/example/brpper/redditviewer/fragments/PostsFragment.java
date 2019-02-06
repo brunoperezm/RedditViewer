@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.example.brpper.redditviewer.PostStructure;
 import com.example.brpper.redditviewer.R;
+import com.example.brpper.redditviewer.RedditAPI;
 import com.example.brpper.redditviewer.adapters.ItemListAdapter;
 
 import java.util.ArrayList;
@@ -64,48 +65,29 @@ public class PostsFragment extends Fragment {
 
 		LinearLayoutManager llm = new LinearLayoutManager(getContext());
 
+
 		ArrayList<PostStructure> lista = new ArrayList<>();
+		ItemListAdapter adapter = new ItemListAdapter(lista);
+		RedditAPI rapi = new RedditAPI();
 		switch (mPage) {
 			case 0:
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			lista.add(new PostStructure("Hol", "as"));
-			break;
-
+				rapi.setRvAdapter(adapter);
+				rapi.get(RedditAPI.EARTH);
+				break;
 			case 1:
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
-			lista.add(new PostStructure("Chau", "EL"));
+				rapi.setRvAdapter(adapter);
+				rapi.get(RedditAPI.ANIMALS);
 			break;
 			default:
 				lista.add(new PostStructure("El tanque", "Verf"));
 				break;
 		}
 
-		ItemListAdapter adapter = new ItemListAdapter(lista);
+
 
 
 		rv.setAdapter(adapter);
 		rv.setLayoutManager(llm);
-
 		return result;
 	}
 

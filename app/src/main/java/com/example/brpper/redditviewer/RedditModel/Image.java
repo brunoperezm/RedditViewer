@@ -1,5 +1,5 @@
 
-package com.example.brpper.redditviewer.RedditAPI;
+package com.example.brpper.redditviewer.RedditModel;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

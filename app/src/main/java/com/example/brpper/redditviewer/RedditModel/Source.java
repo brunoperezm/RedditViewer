@@ -1,10 +1,10 @@
 
-package com.example.brpper.redditviewer.RedditAPI;
+package com.example.brpper.redditviewer.RedditModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Resolution {
+public class Source {
 
     @SerializedName("url")
     @Expose

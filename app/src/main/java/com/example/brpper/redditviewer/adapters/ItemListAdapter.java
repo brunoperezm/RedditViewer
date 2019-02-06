@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.brpper.redditviewer.PostStructure;
 import com.example.brpper.redditviewer.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 	@Override
 	public void onBindViewHolder (ItemViewHolder holder, int position) {
 		holder.tv.setText(mlistPostStructure.get(position).getName());
+		Picasso.get().load(mlistPostStructure.get(position).getUrl()).into(holder.iv);
 	}
 
 	@Override
@@ -56,5 +58,15 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 			iv = view.findViewById(R.id.image_post);
 			tv = view.findViewById(R.id.title_post);
 		}
+	}
+	public void swap(List<PostStructure> list) {
+		if (mlistPostStructure != null) {
+			mlistPostStructure.clear();
+			mlistPostStructure.addAll(list);
+		}
+		else {
+			mlistPostStructure = list;
+		}
+		notifyDataSetChanged();
 	}
 }
