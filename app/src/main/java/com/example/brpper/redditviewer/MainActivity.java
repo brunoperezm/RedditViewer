@@ -1,13 +1,20 @@
 package com.example.brpper.redditviewer;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.brpper.redditviewer.adapters.MainPagerAdaper;
 
 public class MainActivity extends AppCompatActivity {
+
+	// KEYS
+	public static final String KEY_POST_ID = "0";
+	public static final String KEY_POST_IMAGE_URL = "1";
 
 	// TODO: la idea es hacer una app que tenga 3 tabs y cada unos de esos tabs tenga un recyclerview y al hacer clic en un elemento se vaya a un coordinatorlayout. Los datos son los que se van a descargar de reddit. Las pestañas serán new top y trending y una cuarta de usuario tiene que tiene una mini configuración
 	/*
@@ -28,5 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
 	}
 
-
+	@Override
+	protected void onActivityResult (int requestCode, int resultCode, @Nullable Intent data) {
+		Toast.makeText(this, "requestCode " + requestCode + "resultCode " + resultCode, Toast.LENGTH_SHORT).show();
+	}
 }
