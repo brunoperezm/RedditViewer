@@ -6,11 +6,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
+import com.example.brpper.redditviewer.PostStructure;
+import com.example.brpper.redditviewer.RedditModel.Child;
 import com.example.brpper.redditviewer.fragments.PostsFragment;
+
+import java.util.List;
 
 public class MainPagerAdaper extends FragmentPagerAdapter {
 	private static final String TAG = "MainPagerAdaper";
+
 	public static final int NUM_PAGES = 3;
+	private List<PostStructure> postStructureList;
 
 	public MainPagerAdaper (FragmentManager fm) {
 		super(fm);
@@ -32,5 +38,13 @@ public class MainPagerAdaper extends FragmentPagerAdapter {
 	@Override
 	public int getCount () {
 		return NUM_PAGES;
+	}
+
+	public void setPostStructureList (List<PostStructure> postStructureList) {
+		this.postStructureList = postStructureList;
+	}
+
+	public List<PostStructure> getPostStructureList () {
+		return postStructureList;
 	}
 }

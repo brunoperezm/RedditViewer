@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.brpper.redditviewer.MainActivity;
 import com.example.brpper.redditviewer.PostStructure;
 import com.example.brpper.redditviewer.R;
 import com.example.brpper.redditviewer.RedditAPI;
@@ -79,7 +80,9 @@ public class PostsFragment extends Fragment {
 				rapi.get(RedditAPI.ANIMALS);
 			break;
 			default:
-				lista.add(new PostStructure("El tanque", "Verf"));
+				if (((MainActivity) getActivity()).postStructuresList != null)
+				for (int i =0 ; i<((MainActivity) getActivity()).postStructuresList.size(); i++)
+					lista.add(new PostStructure(((MainActivity) getActivity()).postStructuresList.get(i).getName(), ((MainActivity) getActivity()).postStructuresList.get(i).getUrl()));
 				break;
 		}
 
