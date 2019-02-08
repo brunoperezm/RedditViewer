@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.brpper.redditviewer.PostStructure;
 import com.example.brpper.redditviewer.RedditModel.Child;
+import com.example.brpper.redditviewer.UserConfigFragment;
 import com.example.brpper.redditviewer.fragments.PostsFragment;
 
 import java.util.List;
@@ -26,6 +27,11 @@ public class MainPagerAdaper extends FragmentPagerAdapter {
 	@Override
 	public Fragment getItem (int position) {
 		Log.d(TAG, "getItem: Se pide el item " + position);
+		if (position == 2)
+		{
+			return UserConfigFragment.newInstance();
+		}
+
 		return (PostsFragment.newInstance(position));
 	}
 

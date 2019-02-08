@@ -32,9 +32,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 	}
 
 	@Override
-	public int getItemCount () {
-		return mlistPostStructure.size();
-	}
+	public int getItemCount () { return (mlistPostStructure == null) ? 0 : mlistPostStructure.size();}
 
 	@Override
 	public ItemViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
@@ -82,6 +80,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 		}
 	}
 	public void swap(List<PostStructure> list) {
+		Log.d(TAG, "swap: vamos a hacer un swap con una lista de tamaño: " + list.size());
 		if (mlistPostStructure != null) {
 			mlistPostStructure.clear();
 			mlistPostStructure.addAll(list);

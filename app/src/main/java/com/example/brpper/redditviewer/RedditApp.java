@@ -15,7 +15,7 @@ public class RedditApp extends Application {
 	public void onCreate () {
 		super.onCreate();
 		mDaoSession = new DaoMaster(
-				new DaoMaster.DevOpenHelper(this, "post_v2.db").getWritableDb()).newSession();
+				new DaoMaster.DevOpenHelper(this, "post_v3.db").getWritableDb()).newSession();
 
 		if (mDaoSession.getRedditSubredditDBDao().loadAll().size() == 0)
 		{

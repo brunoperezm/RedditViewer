@@ -5,6 +5,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.annotation.Unique;
 
 
 @Entity()
@@ -12,6 +13,9 @@ public class RedditPostDB {
 
 	@Id(autoincrement = true)
 	private Long id;
+
+	@Unique
+	private String internalPostId;
 
 	private String name;
 
@@ -21,10 +25,11 @@ public class RedditPostDB {
 
 	private Long subredditId;
 
-	@Generated(hash = 1969079516)
-	public RedditPostDB(Long id, String name, String url, String author,
-			Long subredditId) {
+	@Generated(hash = 1018992384)
+	public RedditPostDB(Long id, String internalPostId, String name, String url,
+			String author, Long subredditId) {
 		this.id = id;
+		this.internalPostId = internalPostId;
 		this.name = name;
 		this.url = url;
 		this.author = author;
@@ -73,6 +78,15 @@ public class RedditPostDB {
 
 	public void setSubredditId(Long subredditId) {
 		this.subredditId = subredditId;
+	}
+
+
+	public String getInternalPostId() {
+		return this.internalPostId;
+	}
+
+	public void setInternalPostId(String internalPostId) {
+		this.internalPostId = internalPostId;
 	}
 
 }

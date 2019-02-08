@@ -29,13 +29,16 @@ public final class RedditAPI implements Callback<RedditRoot> {
 	private ItemListAdapter mRVadapter;
 	private List<Child> mList = null;
 	ArrayList<PostStructure> mLista = new ArrayList<>();
+	private short mSubredditType;
 
 	public static final short EARTH = 0;
 	public static final short ANIMALS = 1;
-	public RedditAPI() {
-	}
+	DaoSession mDaoSession;
+	public RedditAPI() {}
+	public RedditAPI(DaoSession daoSession) {mDaoSession = daoSession;}
 
 	public void get(short subreddit) {
+		this.mSubredditType = subreddit;
 		Gson gson = new GsonBuilder().setLenient().create();
 
 		Retrofit retrofit  = new Retrofit.Builder()
@@ -46,10 +49,14 @@ public final class RedditAPI implements Callback<RedditRoot> {
 
 		switch (subreddit) {
 			case EARTH:
+				Log.d(TAG, "get: Se ha pedido hacer un request de subreddit EARTH" + mSubredditType);
 				rapi.getAPI("EarthPorn").enqueue(this);
 				break;
 			case ANIMALS:
+				Log.d(TAG, "get: Se ha pedido hacer un request de subreddit ANIMALS" + mSubredditType);
 				rapi.getAPI("aww").enqueue(this);
+				break;
+			default:
 				break;
 		}
 
@@ -83,7 +90,7 @@ public final class RedditAPI implements Callback<RedditRoot> {
 	}
 
 	public interface RedditAPIInterface {
-		@GET("/r/{subreddit}/top.json?sort=new&limit=10")
+		@GET("/r/{subreddit}/new.json?sort=new&limit=25")
 		Call<RedditRoot> getAPI(@Path("subreddit") String subreddit);
 	}
 
@@ -92,7 +99,31 @@ public final class RedditAPI implements Callback<RedditRoot> {
 		Log.d(TAG, "onResponse: Cant de posts" + response.body().getData().getChildren().size());
 		mNumberOfPosts = response.body().getData().getChildren().size();
 		mList = response.body().getData().getChildren();
-		updateItems(mList);
+		List<Child> mFilteredList = new ArrayList<>();
+		Log.d(TAG, "onResponse: se procede a ver si hay que guardar en la DB");
+
+
+		for (Child resultItem:
+			 mList) {
+			if (resultItem.getData().getIsVideo() == false && (
+					resultItem.getData().getUrl().endsWith(".jpg") ||
+					resultItem.getData().getUrl().endsWith(".jpeg") ||
+					resultItem.getData().getUrl().endsWith(".png"))
+					)
+			{
+				mFilteredList.add(resultItem);
+				RedditPostDB rdb = new RedditPostDB();
+				rdb.setSubredditId(new Long (mSubredditType));
+				rdb.setAuthor(resultItem.getData().getUrl());
+				rdb.setUrl(resultItem.getData().getUrl());
+				rdb.setName(resultItem.getData().getTitle());
+				rdb.setInternalPostId(resultItem.getData().getId());
+				mDaoSession.getRedditPostDBDao().insertOrReplace(rdb);
+			}
+
+		}
+		mNumberOfPosts = mFilteredList.size();
+		updateItems(mFilteredList);
 	}
 
 	@Override
@@ -107,9 +138,10 @@ public final class RedditAPI implements Callback<RedditRoot> {
 		}
 		if (mRVadapter != null) {
 			Log.d(TAG, "onResponse: Notificando que cambio el dataset");
-			EventBus.getDefault().post(new ListLoadedEvent("Mi mensaje"));
 			mRVadapter.swap(mLista);
 		}
+		Log.d(TAG, "updateItems: Vamos a enviar un evento con  "+ mSubredditType + ((mSubredditType == EARTH) ? "EARTH" : "ANIMALS"));
+		//EventBus.getDefault().post(new ListLoadedEvent((mSubredditType == EARTH) ? "EARTH" : "ANIMALS", mLista, mSubredditType));
 
 	}
 }
