@@ -16,7 +16,7 @@ import java.util.List;
 public class MainPagerAdaper extends FragmentPagerAdapter {
 	private static final String TAG = "MainPagerAdaper";
 
-	public static final int NUM_PAGES = 3;
+	public static final int NUM_PAGES = 2;
 	private List<PostStructure> postStructureList;
 
 	public MainPagerAdaper (FragmentManager fm) {
@@ -38,7 +38,16 @@ public class MainPagerAdaper extends FragmentPagerAdapter {
 	@Nullable
 	@Override
 	public CharSequence getPageTitle (int position) {
-		return "Titulo de pagina " + position;
+		switch (position) {
+			case 0:
+				return "/r/EarthPorn";
+			case 1:
+				return "/r/aww";
+			case 2:
+				return "Configuración";
+			default:
+				return "";
+		}
 	}
 
 	@Override

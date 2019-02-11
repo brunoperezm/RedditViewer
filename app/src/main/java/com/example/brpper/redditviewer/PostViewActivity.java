@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class PostViewActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class PostViewActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		supportPostponeEnterTransition();
 		setContentView(R.layout.activity_post_view);
 		Intent intent = getIntent();
 
@@ -28,13 +30,23 @@ public class PostViewActivity extends AppCompatActivity {
 			public void onClick (View v) {
 				Intent returnIntent = new Intent();
 				setResult(200, returnIntent);
-				finish();
+				supportFinishAfterTransition();
 			}
 		});
 
-		ImageView image = findViewById(R.id.imageView);
+		ImageView image = findViewById(R.id.image_post);
 		Picasso.get().load(intent.getStringExtra(MainActivity.KEY_POST_IMAGE_URL))
-				.fit().centerCrop().into(image);
+				.fit().centerCrop().into(image, new Callback() {
+			@Override
+			public void onSuccess () {
+				supportStartPostponedEnterTransition();
+			}
+
+			@Override
+			public void onError (Exception e) {
+				supportStartPostponedEnterTransition();
+			}
+		});
 	}
 
 	@Override

@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 	}
-
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, @Nullable Intent data) {
 		//Toast.makeText(this, "requestCode " + requestCode + "resultCode " + resultCode, Toast.LENGTH_SHORT).show();
@@ -115,10 +114,12 @@ public class MainActivity extends AppCompatActivity {
 					.list();
 			List<RedditPostDB> lista_de_posts_EARTH = ((RedditApp)getApplication()).getDaoSession().getRedditPostDBDao().queryBuilder()
 					.where(RedditPostDBDao.Properties.SubredditId.eq(RedditAPI.EARTH))
+					.limit(10)
 					.orderDesc(RedditPostDBDao.Properties.Id)
 					.list();
 			List<RedditPostDB> lista_de_posts_ANIMALS = ((RedditApp)getApplication()).getDaoSession().getRedditPostDBDao().queryBuilder()
 					.where(RedditPostDBDao.Properties.SubredditId.eq(RedditAPI.ANIMALS))
+					.limit(10)
 					.orderDesc(RedditPostDBDao.Properties.Id)
 					.list();
 

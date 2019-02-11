@@ -3,6 +3,7 @@ package com.example.brpper.redditviewer.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,8 @@ import java.util.List;
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemViewHolder> {
 	private static final String TAG = "ItemListAdapter";
 	private List<PostStructure> mlistPostStructure;
-
+	private Context mContext;
+	private Activity mActivity;
 
 	public ItemListAdapter (List<PostStructure> lista) {
 		mlistPostStructure = lista;
@@ -38,16 +40,18 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 	public ItemViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
 		ViewGroup v = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post,parent, false);
 
+		final ImageView imageView = v.findViewById(R.id.image_post);
 		final ItemViewHolder ivh = new ItemViewHolder(v);
 
 		v.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick (View v) {
-				Toast.makeText(v.getContext(), "Hola " + ivh.getAdapterPosition(), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(v.getContext(), "Hola " + ivh.getAdapterPosition(), Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(v.getContext(), PostViewActivity.class);
 				intent.putExtra(MainActivity.KEY_POST_ID,""+ ivh.getAdapterPosition());
 				intent.putExtra(MainActivity.KEY_POST_IMAGE_URL,""+ mlistPostStructure.get(ivh.getAdapterPosition()).getUrl() );
-				((Activity) v.getContext()).startActivityForResult(intent, 54);
+				ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, imageView, "imageDetailTransition");
+				((Activity) v.getContext()).startActivityForResult(intent, 54, optionsCompat.toBundle());
 			}
 		});
 		return ivh;
@@ -89,5 +93,21 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 			mlistPostStructure = list;
 		}
 		notifyDataSetChanged();
+	}
+
+	public Context getmContext () {
+		return mContext;
+	}
+
+	public void setmContext (Context mContext) {
+		this.mContext = mContext;
+	}
+
+	public Activity getmActivity () {
+		return mActivity;
+	}
+
+	public void setmActivity (Activity mActivity) {
+		this.mActivity = mActivity;
 	}
 }

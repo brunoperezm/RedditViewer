@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars[9]" />
+        tools:srcCompat="@tools:sample/avatars[9]"
+        android:transitionName="imageDetailTransition"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

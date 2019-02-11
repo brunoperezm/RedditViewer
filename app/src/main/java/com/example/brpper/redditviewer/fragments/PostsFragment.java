@@ -87,11 +87,13 @@ public class PostsFragment extends Fragment {
 		switch (mPage) {
 			case 0:
 				mAdapter = new ItemListAdapter( ((MainActivity)getActivity()).postStructuresListEARTH);
+				mAdapter.setmActivity(getActivity());
 				//rapi.setRvAdapter(mAdapter);
 				//rapi.get(RedditAPI.EARTH);
 				break;
 			case 1:
 				mAdapter = new ItemListAdapter( ((MainActivity)getActivity()).postStructuresListANIMALS);
+				mAdapter.setmActivity(getActivity());
 				//rapi.setRvAdapter(mAdapter);
 				//rapi.get(RedditAPI.ANIMALS);
 				break;
@@ -130,6 +132,12 @@ public class PostsFragment extends Fragment {
 	public void onPause () {
 		super.onPause();
 		Log.d(TAG, "onPause: Pausado!!!!! " + mPage );
+	}
+
+	@Override
+	public void onResume () {
+		Log.d(TAG, "onPause: Resumido!!!!! " + mPage );
+		super.onResume();
 	}
 
 	@Override
